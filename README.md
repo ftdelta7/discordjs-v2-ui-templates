@@ -107,3 +107,6 @@ Fork the repository and create a branch for your change. Keep each template self
 ## License
 
 Released under the [MIT License](./LICENSE).
+
+---
+*Not affiliated with or endorsed by Discord Inc. "Discord" is a registered trademark of Discord Inc.*
