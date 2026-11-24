@@ -4,7 +4,7 @@
 ![discord.js v14](https://img.shields.io/badge/discord.js-v14-5865F2)
 [![MIT License](https://img.shields.io/badge/license-MIT-blue)](./LICENSE)
 
-Four Discord Components V2 templates for CommonJS bots. Try them in a server with the included prefix-command runner, or copy an individual builder into your own bot. Each builder returns a fresh `ContainerBuilder`.
+Seven Discord Components V2 templates for CommonJS bots. Try them in a server with the included prefix-command runner, or copy an individual builder into your own bot. Each builder returns a fresh `ContainerBuilder`. You can also import any builder from `./src`.
 
 ## Quick Start
 
@@ -50,8 +50,6 @@ const user = message.mentions.users.first() ?? message.author;
 await sendCard(message, buildProfileCard(user));
 ```
 
-![Profile Card Preview](./assets/profile-card.png)
-
 ### Music player
 
 `!music` shows the current track, artist, duration, and playlist position. Below the divider, the caller can select **Previous**, **Pause/Resume**, or **Next**. The demo simulates playback by updating the card.
@@ -63,18 +61,14 @@ await sendCard(message, buildMusicPlayerCard(message.author.id));
 
 For a custom playlist, pass `(ownerId, index, paused, tracks)`, where `tracks` is a nonempty array of objects with `title`, `artist`, and `duration` strings. Use the same playlist when processing button clicks. The runner includes the owner check and message update logic. [Button handler](./src/index.js)
 
-![Music Player Preview](./assets/music-player.png)
-
 ### Help menu
 
-`!help` groups commands under General, Music, and Moderation. Each category is a separate text display in an accented container, so you can edit one category without rebuilding the layout.
+`!help` groups commands under General, Music, Community, and Moderation. Each category is a separate text display in an accented container, so you can edit one category without rebuilding the layout.
 
 ```js
 const { buildHelpMenuCard } = require('./src/templates/helpMenu');
 await sendCard(message, buildHelpMenuCard());
 ```
-
-![Help Menu Preview](./assets/help-menu.png)
 
 ### Moderation log
 
@@ -90,7 +84,43 @@ const card = buildModLogCard({
 await sendCard(message, card);
 ```
 
-![Mod Log Preview](./assets/mod-log.png)
+### Welcome card
+
+`!welcome [@user]` previews a member greeting with their avatar, the server member count, and a **Server Rules** link. Pass the rules channel URL to point the button to your server's rules.
+
+```js
+const { buildWelcomeCard } = require('./src/templates/welcomeCard');
+await sendCard(message, buildWelcomeCard({
+  username: message.author.displayName,
+  avatarUrl: message.author.displayAvatarURL(),
+  serverName: message.guild.name,
+  memberCount: message.guild.memberCount,
+  rulesUrl: message.guild.rulesChannel?.url,
+}));
+```
+
+### Ticket panel
+
+`!ticket` displays a **Create Ticket** button and a category menu with General Support, Bug Report, and Billing. In your bot, handle `ticket:category` and save `interaction.values[0]` for that user and panel. Handle `ticket:create` to open the ticket using their selection. The runner replies privately to preview each control.
+
+```js
+const { buildTicketPanel } = require('./src/templates/ticketPanel');
+await sendCard(message, buildTicketPanel());
+```
+
+### Giveaway card
+
+`!giveaway` previews a prize, host, relative closing time, entry count, and **Join Giveaway** button. Pass `endsAt` in milliseconds. In your bot, handle `giveaway:join` to record an entry for the message and update the card with the new count. The runner replies privately to button clicks.
+
+```js
+const { buildGiveawayCard } = require('./src/templates/giveawayCard');
+await sendCard(message, buildGiveawayCard({
+  prize: 'Community prize pack',
+  hostId: message.author.id,
+  endsAt: Date.now() + 3_600_000,
+  entryCount: 0,
+}));
+```
 
 ## Components V2 Rules & Gotchas
 
