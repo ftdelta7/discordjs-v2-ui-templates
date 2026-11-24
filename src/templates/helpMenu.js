@@ -12,6 +12,7 @@ function buildHelpMenuCard() {
     .addTextDisplayComponents(
       text => text.setContent('### General\n`!help` — Show this menu.\n`!profile [@user]` — View an account profile.'),
       text => text.setContent('### Music\n`!music` — Open an interactive demo playlist.'),
+      text => text.setContent('### Community\n`!welcome [@user]` — Preview a welcome card.\n`!ticket` — Open the support panel.\n`!giveaway` — Preview an active giveaway.'),
       text => text.setContent('### Moderation\n`!modlog [@user] [reason]` — Preview a moderation record.'),
     );
 }

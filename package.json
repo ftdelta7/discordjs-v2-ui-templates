@@ -10,7 +10,7 @@
   },
   "scripts": {
     "start": "node src/index.js",
-    "check": "node --check src/index.js && node --check src/templates/profileCard.js && node --check src/templates/musicPlayer.js && node --check src/templates/helpMenu.js && node --check src/templates/modLogCard.js"
+    "check": "node --check src/index.js && node --check src/templates/profileCard.js && node --check src/templates/musicPlayer.js && node --check src/templates/helpMenu.js && node --check src/templates/modLogCard.js && node --check src/templates/welcomeCard.js && node --check src/templates/ticketPanel.js && node --check src/templates/giveawayCard.js"
   },
   "dependencies": {
     "discord.js": "^14.28.1",
